@@ -1,0 +1,350 @@
+<div class="breadcrumbWrapper">
+		<ul>
+			<li>Dashboards</li>
+			<li>></li>
+			<li>Complimentary Channel Automation</li>
+			<div ng-if='viewOptions.option.value==0'>
+			<li>></li>
+			<li>Download SMS Feed Data</li>
+			</div>
+			<div ng-if='viewOptions.option.value==1'>
+			<li>></li>
+			<li>Upload Subscribers to Add File</li>
+			</div>
+			<div ng-if='viewOptions.option.value==2'>
+			<li>></li>
+			<li>View Provisioned Complimentary Channels</li>
+			</div>
+			<div ng-if='viewOptions.option.value==3'>
+			<li>></li>
+			<li>Deprovision Complimentary Channels</li>
+			</div>
+		</ul>
+	</div>
+<div id="mainBody" class="pageWrapper indexPage">
+    <div id="contentPannel">
+    	<div class="dfw-success" ng-if='uploadSuccess' style='width:90%;padding-left:5px'>
+    		<p ng-bind='errSucc'></p>
+    	</div>
+		<div class="dfw-error" ng-if='error' style='width:90%;padding-left:5px'>
+			<p ng-bind='errMsg'></p>
+		</div>
+        <div class="totaldiv">
+	        <div class="searchHeader marginTopBottom10" id='actionSearch'>
+				<img src = "images/ftv2mnode_noline.gif" id = "searchMinus" ng-click="toggle('searchMinus')"> 
+				<img src = "images/ftv2pnode_noline.gif" id = "searchPlus" ng-click="toggle('searchPlus')" style = "display:none;">
+				&nbsp;
+				<label style="width:19.3%">What do you want to do ?</label>
+				<select ng-model="viewOptions.option" style="width:230px" ng-change="resize();onLoad();resetAll();" ng-options="item.name for item in viewOptions.availAoptions track by item.value"></select>
+			</div>
+       		<div id="searchSection" ng-if='viewOptions.option.value!=0 && viewOptions.option.value!=-1 && viewOptions.option.value!==1 && viewOptions.option.value!==3'>
+				<div class="searchHeader">
+					<span style="font-size:12px;color:#666">Search</span>
+				</div>
+				<div id="searchParentSection">
+					<div class="col-lg-3 marginBottom15" ng-if="viewOptions.option.value==0">
+						<label>File Name</label>
+					</div>
+					<div class="col-lg-3 marginBottom15" ng-if="viewOptions.option.value==0">
+						<input type="text" ng-model="fileName" id="fileName"/>
+					</div>
+					<div class="col-lg-3 marginBottom15" ng-if="viewOptions.option.value==2">
+						<label>Period<span style="color:red">*</span></label>
+					</div>
+					<div class="col-lg-3 marginBottom15" ng-if="viewOptions.option.value==2">
+						<select ng-model="last4Months.period" style="width:156px" ng-options="item.name for item in last4Months.list track by item.value"></select>
+					</div>
+					<div class="col-lg-3 marginBottom15">
+						<label>Package Billing Code</label>
+					</div>
+					<div class="col-lg-3 marginBottom15" style="margin-bottom:33px">
+						<input type="text" ng-model="pkgBillingCode" id="packgaeCode"/>
+					</div>
+					<div class="col-lg-3">
+						<label>Channel Name</label>
+					</div>
+					<div class="col-lg-3">
+						<input type="text" id="chName" ng-model="channelName"/>
+					</div>
+					<div class="col-lg-3">
+						<label>Channel Type</label>
+					</div>
+					<div class="col-lg-3">
+						<select ng-model="channel.type" style="width:156px" ng-options="item.name for item in channel.types track by item.value"></select>
+					</div>				
+				</div>
+				<div class="buttonBox">
+					<input type="button" value="Search" class="btn btn-primary searchButton" style="margin-top:0px !important" ng-click="propValue='';resize();loadDashboard(1,20);toggle('searchMinus')"/><span class="floatR separator">|</span><a class="floatR clearLink" ng-click="reset()">Clear</a>
+				</div>
+			</div>
+			<div id="searchResults" ng-if="searched && viewOptions.option.value==2">
+				<div class="searchResultsHeader">
+					<img src = "images/ftv2mnode_noline.gif" id = "searchResMinus" ng-click="toggle('searchResMinus')">
+					<img src = "images/ftv2pnode_noline.gif" id = "searchResPlus" ng-click="toggle('searchResPlus')" style = "display:none;">
+					<span>&nbsp;Search Results&nbsp;</span>
+					<span ng-if='CCA.length>0'>(displaying {{currentPage*recordsPerPage+1}} - {{currentPage*recordsPerPage+CCA.length}} of {{totalCCA.length}} records)</span>
+					<span ng-if='CCA.length==0'>(displaying 0 - {{CCA.length}} of {{totalCCA.length}} records)</span>
+				</div>
+				<div id="searchResultsContainer" class="dummyclass" ng-if="viewOptions.option.value==2">
+					<table class='table' style="margin-bottom:0px" id='ccaDashboard'>
+						<thead>
+							<tr>
+								<th rowspan="2">Package Billing Code</th>
+								<th rowspan="2">Provisioning Range(ET)</th>
+							<!-- 	<th rowspan="2">Total Penetration Benchmark</th> -->
+								<th rowspan="2">Current Reach</th>
+								<th rowspan="2">Monthly Target</th>
+								<th rowspan="2">Status</th>
+								<th colspan="4" style="text-align:center">Accounts</th>
+								<th rowspan="2">Export</th>
+							</tr>
+							<tr>
+								<th>Pending</th>
+								<th>In Progress</th>
+								<th>Completed</th>								
+								<th>Total</th>						
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="data in CCA">
+								<td>{{data.packageBillingCode}}</td>
+								<td>{{data.minProvisioningRange}}-{{data.maxProvisioningRange}}</td>
+							<!-- 	<td>{{data.penetrationBnchMrk}}</td> -->
+								<td>{{data.currentReach}}</td>
+								<td>{{data.monthlyTarget}}</td>
+								<td>{{data.accountSubsDtlsStatus}}</td>
+								<td>{{data.pendingAccountCount}}</td>
+								<td>{{data.inProgressAccountCount}}</td>
+								<td>{{data.successAccountCount}}</td>								
+								<td>{{data.totalAccountCount}}</td>
+								<td><img src = "images/zipReady.PNG" width='20' height='20' ng-click='downloadFile(data.packageBillingCode)'></td>
+							</tr>
+							<tr ng-if="CCA.length==0"><td colspan="6">No records found.</td></tr>
+						</tbody>
+						<tfoot ng-if="CCA.length!=0">
+		                    <td colspan="8">
+		                        <div class="pagination pull-right">
+		                            <ul>
+		                            	<li ng-class="{disabled: currentPage == 0}">
+				                				<a href ng-click="firstPage()"> First</a>
+				             				 </li>
+		                                <li ng-class="{disabled: currentPage == 0}">
+		                                    <a href ng-click="prevPage()"><< Prev</a>
+		                                </li>
+		                                <li ng-repeat="n in range()"
+		                                    ng-class="{active: n == currentPage}"
+		                                ng-click="setPage(n)">
+		                                    <a href ng-bind="n + 1">1</a>
+		                                </li>
+		                                <li ng-class="nextPageDisabled()">
+		                                    <a href ng-click="nextPage()">Next >></a>
+		                                </li>
+		                                <li ng-class="nextPageDisabled()">
+							                <a href ng-click="lastPage()"> Last</a>
+							             </li>
+		                            </ul>
+		                        </div>
+		                    </td>
+		                </tfoot>
+					</table>
+				</div>			
+				<!-- <div id="searchResultsContainer" class="dummyclass" ng-if="viewOptions.option.value==2">
+					<table class='table'>
+						<thead>
+							<tr>
+								<th rowspan="2">File Name</th>
+								<th rowspan="2">Provisioning range</th>
+								<th rowspan="2">Status</th>
+								<th colspan="4" style="text-align:center">Accounts</th>
+								<th rowspan="2">Uploaded on</th>
+								<th rowspan="2">Export</th>
+							</tr>
+							<tr>
+								<th>Pending</th>
+								<th>Completed</th>
+								<th>Failed</th>
+								<th>Total</th>						
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="data in CCPackageMetadata" ng-class="data.recentlyEdited?'rowHighlight':''">
+								<td><a ng-click="openMetadataPopup($index,data)" class="clearLink">{{data.billingCode}}</a></td>
+								<td>{{data.channelName}}</td>
+								<td>{{data.targetReach}}</td>
+								<td>{{data.legacyReach}}</td>
+								<td>{{data.penetrationBenchMark}}</td>
+								<td ng-bind="data.lastUpdatedDate?'{{data.lastUpdatedDate}}'+' By '+'{{data.lastUpdateBy}}':''"></td>
+							</tr>
+							<tr ng-if="CCPackageMetadata.length==0"><td colspan="6">No records found.</td></tr>
+						</tbody>
+					</table>
+				</div> -->
+			</div>
+			<div id='searchSectionDeProv' class='deProvision' ng-if="viewOptions.option.value==3">
+				<div style="overflow:auto">
+					<div class="rowLbl">
+						<label> Select file to de-provision</label>&nbsp;
+						<label style="color: red;">*</label>
+					</div>
+					<div class="rowCnt" style='padding-top:10px;width: 30%;padding-right:0;margin-right: -78px;padding-left:5px'>
+						<input id="uploadFile" placeholder="Choose File" class="form-control searchInput" ng-model="deProvision.file" ng-change="displayHideMessages()" readonly/>
+					</div>
+					<div class="fileUpload btn btn-primary" style='margin-top:12px;float:left;height:18px !important;padding-top:1px' id='fileUploadDiv'>
+					    <span>Browse</span>
+					    <input id="uploadBtn" type="file" class="upload" file-model="deProvisionFile" accept=".csv" onchange="angular.element(this).scope().fileChanged(this)"/>
+					</div>										
+					<div class="rowLbl" style='padding-top: 0;width:100%;padding-left:21%;'>
+						<label style="font: 9px Verdana, Geneva, sans-serif !important;font-style: italic !important;">Download the sample template 
+							<a  href="" ng-click="downloadSampleTemplate()">here</a>
+						</label>
+					</div>
+				</div>
+				<div style="overflow:auto">
+					<div class="rowLbl">
+						<label>Business Justification</label>&nbsp;<label
+							style="color: red;">*</label>
+					</div>
+					<div class="rowCnt" style='width:30%;padding-right:0;padding-left:5px'>
+					<textarea maxlength="512" rows="4" cols="50" ng-model="deProvision.busJust"  class="form-control" style='height:auto !important;resize:none' ng-change="displayHideMessages()"> 
+					</textarea>
+					</div>
+				</div>			
+				<div style="overflow:auto">
+					<div class="rowLbl">
+						<label>Effective start date</label>&nbsp;<label
+						style="color: red;">*</label>					
+					</div>
+					<div class="rowCnt" style='width:30%;padding-right:0;padding-left:5px'>
+						<input type="text" id='effectiveStartDate' readonly class="form-control datepick dfw-viewer-input searchInput" ng-model="deProvision.effectiveStartDate" style='background:url(../../images/icon-date-time-16x16.png) no-repeat right' ng-change="displayHideMessages()"/>
+					</div>			
+				</div>
+				<div style="overflow:auto">
+					<div class="rowLbl">
+						<label>Effective end date</label>&nbsp;<label
+						style="color: red;">*</label>						
+					</div>
+					<div class="rowCnt" style='width:30%;padding-right:0;padding-left:5px'>
+						<input type="text" id='effectiveEndDate' readonly class="form-control datepick dfw-viewer-input searchInput" ng-model="deProvision.effectiveEndDate" style='background:url(../../images/icon-date-time-16x16.png) no-repeat right' ng-change="displayHideMessages()"/>
+					</div>			
+				</div>
+				<div style="overflow:auto;margin-top:20px">
+					<div class="searchTd m-t-10">
+						<input type="button" value="Save" class="btn" ng-click='saveFile()' style='margin-left:5px;width:10%' ng-disabled="disableSaveBtn">				
+					</div>
+				</div>
+			</div>
+			
+			 <div id='searchSectionSmsFeed' class='smsFeed' ng-if="viewOptions.option.value==0">
+			   <div style="overflow:auto"> 
+			     	<div class="rowLbl"  style='width:20.9%;padding-left:0px'>
+			     	   <label>Provisioning Period</label>&nbsp;<label
+			     	   style="color: red;">*</label>
+			     	</div>
+			     	
+			     	<div class="rowCnt" style='width:30%;padding-right:0;padding-left:5px'>
+			     	   <select ng-model="viewOpt.option" style="width:230px" ng-change="resize();" ng-options="item.name for item in viewOpt.getPeriodForSmsFeedData track by item.value"></select>
+			     	</div>
+			   </div>
+			   
+			   <div style="overflow:auto">
+			        <div class="rowLbl" style='padding-left:0px;width:21.3%'>
+			          <label>Feed Type</label>
+			        </div>
+			        
+			        <div class="rowCnt" style='padding-left:0px'>
+			           <select ng-model="feed.value" style="width:230px" ng-change="resize();fetchDetails()">
+			              <option value>Select One</option>
+			              <option value="Both">Both</option>
+			              <option value="FirstFeed">First Feed</option>
+			              <option value="SecondFeed">Second Feed</option>
+			            </select>
+			        </div>
+			   </div>
+			   
+			   <div style="overflow:auto;margin-top:20px">
+					<div class="searchTd m-t-10">
+						<input type="button" value="Download" class="btn" ng-click='downloadSampleFile()' style='margin-left:5px;width:10%' ng-disabled="disableDownloadBtn">				
+					</div>
+				</div>
+	      </div>
+	      
+	      
+	      <div id="searchSectionUploadSubsToAdd" class='uploadSubsToAdd' ng-if="viewOptions.option.value==1">
+	          <div style="overflow:auto">
+					<div class="rowLbl" style='padding-left:0px;width:21.3%;padding-top:30px;'>
+						<label> Select file </label>&nbsp;
+						<label style="color: red;">*</label>
+					</div>
+					<div class="rowCnt" style='padding-top:30px;width: 30%;padding-right:0;margin-right: -78px;padding-left:0px'>
+						<input id="uploadFile" placeholder="Choose File" class="form-control searchInput" ng-model="subsToAddFile.file" ng-change="displaySubsToAddHideMessages()" readonly/>
+					</div>
+					<div class="fileUpload btn btn-primary" style='margin-top:32px;float:left;height:18px !important;padding-top:1px' id='fileUploadDiv'>
+					    <span>Browse</span>
+					    <input id="uploadBtn" type="file" class="upload" file-model="subsToAddFile" accept=".xlsx" onchange="angular.element(this).scope().subsToAddFileChanged(this)"/>
+					</div>										
+					<div class="rowLbl" style='padding-top: 0;width:100%;padding-left:21.5%;'>
+						<label style="font: 9px Verdana, Geneva, sans-serif !important;font-style: italic !important;">Download the sample template 
+							<a  href="" ng-click="downloadSampleSubsToAddTemplate()">here</a>
+						</label>
+					</div>
+				</div>
+				
+				<div style="overflow:auto">
+					<div class="rowLbl" style='padding-left:0px;width: 21%;'>
+						<label>Business Justification</label>&nbsp;<label
+							style="color: red;">*</label>
+					</div>
+					<div class="rowCnt" style='width:30%;padding-right:0;padding-left:5px'>
+					    <textarea maxlength="512" rows="4" cols="50" ng-model="subsToAddFile.busJust"  class="form-control" style='height:auto !important;resize:none' ng-change="displayHideMessages()"> 
+					    </textarea>
+					</div>
+				</div>
+				
+				<div style="overflow:auto"> 
+			     	<div class="rowLbl"  style='width:21%;padding-left:0px'>
+			     	   <label>Provisioning Period</label>&nbsp;<label
+			     	   style="color: red;">*</label>
+			     	</div>
+			     	
+			     	<div class="rowCnt" style='width:30%;padding-right:0;padding-left:5px'>
+			     	<input id="getPeriod" class="form-control searchInput" style="width:230px" ng-model="getData" ng-change="resize();" readonly></input>
+			     	</div>
+			   </div>
+			   
+			   <div style="overflow:auto">
+			        <div class="rowLbl" style='padding-left:0px;width:21.3%'>
+			          <label>Feed Type</label>&nbsp;<label
+			     	   style="color: red;">*</label>
+			        </div>
+			        
+			        <div class="rowCnt" style='padding-left:0px'>
+			           <select ng-model="subsToAddFile.feed.value" style="width:230px" ng-change="resize();removeMsg();">
+			              <option value>Select One</option>
+			              <option value="FirstFeed">First Feed</option>
+			              <option value="SecondFeed">Second Feed</option>
+			            </select>
+			        </div>
+			   </div>
+			   
+			   <div style="overflow:auto;margin-top:20px">
+					<div class="searchTd m-t-10">
+						<input type="button" value="Upload" class="btn" ng-click='saveSubsToAddFile()' style='margin-left:5px;width:10%' ng-disabled="disableUploadBtn">				
+					</div>
+				</div>
+				
+	      </div>
+	      
+			
+		</div>
+	</div>
+</div>
+<div id="mydiv" ng-if="searchbuttonclicked">
+    <div class='loaderdiv'>
+	    <div style='text-align:center;background-color:#ccc;color: black;font-weight: bold;padding: 3px;'>
+	    	Processing,please wait...
+	    </div>
+	    <div style='margin-left:5%;margin-top: 15px;'>
+	    	<img src="images/spin.gif" class="ajax-loader" width="90%" height='10'/>
+	    </div>
+   </div>
+</div>

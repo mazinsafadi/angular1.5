@@ -1,0 +1,41 @@
+<div id = "modal-content" class="modal-content">
+	<div class="modal-header">
+		<label>Summary of failed accounts for the file - {{fileName}}</label>
+		<button ng-click='close()' class="closeBtn" style = "margin:-2px !important">X</button>
+	</div>
+	<div id = "modal-body" class="modal-body" style = "height:100% !important;margin:4px; padding:0px !important;">
+		<label ng-if="FailedAccounts.length!=0">Displaying first 25 failed accounts</label>
+		<table class='tabular-data table table-striped table-bordered popupTable'>
+			<thead>
+				<tr>
+					<th>Account</th>
+					<th>Billing Code</th>
+					<th>Action</th>
+					<th>Error Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="data in FailedAccounts">
+					<td>{{data.accountNumber}}</td>
+					<td>{{data.packageBillingCode}}</td>
+					<td>{{data.action}}</td>
+					<td>{{data.errorDescription}}</td>
+				</tr>
+				<tr ng-if="FailedAccounts.length==0"><td>No records found</td></tr> 
+			</tbody>
+		</table>
+		<label style="color:red;font-style: italic !important;">Note: System displays only top 25 records. To view all records please click on "Export All".</label>
+		<div class="buttonPanel" style="height:30px; padding-top:1px;">
+			<ul class = "buttonbox floatR">
+				<li class = "marginL-15" style = "margin-right: 20px;">
+					<input type = "button" class="btn-popup" ng-click='close()' value ="Close"/>
+				</li>
+				<li class = "floatL marginL-15">
+				<div class="searchTd m-t-10">
+					<input type = "button"  class="btn" ng-click = "ExportAll()" value ="Export All" style="border-radius: 5px;height: 23px;padding: 3px 9px 15px 11px;margin-bottom:0px" ng-disabled="FailedAccounts.length==0"/>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html ng-app="Bulkload">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"  content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--    <meta http-equiv="X-UA-Compatible" content="IE=11" />-->
+
+        <!--    ////////////-->
+        <!--    ///LIB CSS//-->
+        <!--    ////////////-->
+        <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css" />
+        <link rel="stylesheet" href="lib/bootstrap/bootstrap.no-icons.min.css" />
+        <link rel="stylesheet" href="lib/jquery/jquery-ui/jquery-ui.min.css" />
+        <link rel="stylesheet" href="lib/jquery/timepicker/jquery.timepicker.css">
+        <link rel="stylesheet" href="lib/jquery/timepicker/jquery-ui-timepicker-addon.css">
+        <!-- <link rel="stylesheet" href="lib/jquery/datatable/dataTables.bootstrap.css"> -->
+        <link rel="stylesheet" href="lib/jquery/dragndrop/multi.css">
+        <link rel="stylesheet" href="lib/angular-loading-bar/loading-bar.css">
+        <link rel="stylesheet" href="lib/bootstrap-select/bootstrap-select.css">
+        <!--    ////////////-->
+        <!--    ///CUSTOM CSS//-->
+        <!--    ////////////-->
+        <link rel="stylesheet" href="css/master.css" />
+        <link rel="stylesheet" href="css/styles.css" />
+        <link href="css/StyleNew.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/utils.css" />
+        <link rel="stylesheet" href="css/menu.css">
+        <link rel="stylesheet" href="css/packageSelect.css">
+        <!--    ////////////-->
+        <!--    ///DFW CSS//-->
+        <!--    ////////////-->
+        <!--<link rel="stylesheet" href="lib/dfw/bootstrap-dfw.css">-->
+        <link rel="stylesheet" href="lib/dfw/dfw-plugins.css">
+        <!--    //////////////////////////////////////////////////////////////////-->
+        <!--    ////////////-->
+        <!--    ///LIB JS//-->
+        <!--    ////////////-->
+               <script type="text/javascript" src="lib/angular/angular.min.js"></script>
+                <script type="text/javascript" src="lib/angular/ng-csv.min.js"></script>
+                 <script type="text/javascript" src="lib/angular/angular-base64.js"></script>
+        <script type="text/javascript" src="lib/jquery/jquery-1.10.2.js"></script>
+        <script type="text/javascript" src="lib/jquery/jquery-ui/jquery-ui.js"></script>
+        <script type="text/javascript" src="lib/jquery-validation/jquery.validate.js"></script>
+        <script type="text/javascript" src="lib/jquery/alerts/jquery.alerts.js"></script>
+        <script type="text/javascript" src="lib/jquery/typeahead/typeahead.bundle.js"></script>
+        <script type="text/javascript" src="lib/jquery/timepicker/jquery-ui-timepicker-addon.js"></script>
+        <script type="text/javascript" src="lib/jquery/timepicker/moment.js"></script>
+        <script type="text/javascript" src="lib/jquery/timepicker/moment-timezone-with-data.js"></script>
+        <script type="text/javascript" src="lib/jquery/datatable/jquery.dataTables.js"></script>
+        <script type="text/javascript" src="lib/jquery/datatable/dataTables.bootstrap.js"></script>
+        <script type="text/javascript" src="lib/bootstrap/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap-select/bootstrap-select.min.js"></script><!-- 
+        <script type="text/javascript" src="//code.angularjs.org/1.5.8/angular.min.js"></script> -->
+        <script type="text/javascript" src="lib/jquery/dragndrop/angular-drag-and-drop-lists.js"></script>
+        <script type="text/javascript" src="lib/angular-ui-router/angular-ui-router.js"></script>
+        <script type="text/javascript" src="lib/angular/angular-mocks.js"></script>
+        <script type="text/javascript" src="lib/angular-bootstrap/ui-bootstrap-tpls-0.13.4.min.js"></script>
+        <script src="lib/angular/angular-sanitize.min.js"></script>
+        <script type="text/javascript" src="lib/angular-loading-bar/loading-bar.min.js"></script>
+        <script type="text/javascript" src="lib/angular-jquery-validation/angular-jquery-validate.js"></script>
+        <script type="text/javascript" src="lib/angular-jquery-validation/bootstrap-select-extend.js"></script>
+        <!--    ////////////-->
+        <!--    ///DFW JS//-->
+        <!--    ////////////-->
+        <script type="text/javascript" src="lib/dfw/dfw-plugins.js"></script>
+      <!--   <script type="text/javascript" src="lib/dfw/dfw-form-plugin.js"></script> -->
+        <!--    ////////////-->
+        <!--    ///CUSTOM JS//-->
+        <!--    ////////////-->
+        <script type="text/javascript" src="js/scripts.js"></script>
+        <!--    ////////////-->
+        <!--    ///APPLICATION MODULE JS//-->
+        <!--    ////////////-->
+        <script src="modules/Bulkload.js"></script>
+        <script src="modules/Bulkload/constants/url.js"></script>
+
+        <script src="modules/Bulkload/controllers/bulkloadController.js"></script>
+        <script src="modules/Bulkload/controllers/compChannelController.js"></script>
+         <script src="modules/Bulkload/controllers/DNSDashboardController.js"></script>
+         <script src="modules/Bulkload/controllers/CmplDashboardController.js"></script>
+         <script src="modules/Bulkload/controllers/CCADashboardController.js"></script>
+          <script src="modules/Bulkload/controllers/DeletePopupController.js"></script>
+           <script src="modules/Bulkload/controllers/FailedAccPopupController.js"></script>
+           <script src="modules/Bulkload/controllers/CorrectionPopupController.js"></script>
+           <script src="modules/Bulkload/controllers/CCPackageMetadataController.js"></script>
+           <script src="modules/Bulkload/controllers/CCPackageMetadataPopupController.js"></script>
+           <script src="modules/Bulkload/controllers/CCBasePackagePopupController.js"></script>
+           <script src="modules/Bulkload/controllers/CCPairedPackagesPopupcontroller.js"></script>
+           <script src="modules/Bulkload/controllers/CCSettingsPopupController.js"></script>
+        <script src="modules/Bulkload/services/bulkloadServices.js"></script>
+ 		<script src="modules/Bulkload/services/compChannelServices.js"></script>
+ 		<script src="modules/Bulkload/directives/numbersOnly.js"></script>
+
+        <!--    ////////////-->
+        <!--    ///COMMON DIRECTIVES JS//-->
+        <script src="lib/jquery/datatable/jquery.dataTables.min.js"></script>
+        <script src="lib/jquery/datatable/dataTables.fixedHeader.min.js"></script>
+       <!--  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"> -->
+        <!--    ////////////-->
+        <script type="text/javascript" src="modules/Bulkload/directives/fileBrowse.js"></script>
+</head>
+
+<body>
+    <div ui-view></div>
+</body>
+
+</html>

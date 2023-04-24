@@ -1,0 +1,78 @@
+<div id = "modal-content" class="modal-content">
+	<div class="modal-header">
+		<label>Edit Complimentary Configuration Details</label>
+		<button ng-click='close()' class="closeBtn">X</button>
+	</div>
+	<div id = "modal-body" class="modal-body" style = "height:100% !important;margin:4px; padding:5px !important;">
+		<div class="dfw-success" ng-if='updateSuccess' style='width:90%;padding:0px 0px 7px 5px !important'>
+			<p ng-bind='succMsg'></p>
+		</div>
+		<div class="dfw-error" ng-if='error' style='width:90%;padding:0px 0px 7px 5px !important'>
+			<p ng-bind='errMsg'></p>
+		</div>
+		<div class="rowDivMetadata" style="margin:5px">
+			<div class="col-lg-4">
+				<label>Total Population Report Generation on</label>
+			</div>
+			<div class="col-lg-8">
+				<input type="text" ng-model="populationReport" id='populationReport' numbers-only ng-change="restrictInput(populationReport,'populationReport')"/> th of the month
+			</div>		
+			
+		</div>
+		<!-- <div class="rowDivMetadata" style="margin:5px">
+			<div class="col-lg-4">
+				<label>Account Staging</label>
+			</div>
+			<div class="col-lg-8">
+				<input type="text" ng-model="accStaging" id='accStaging' numbers-only ng-change="restrictInput(accStaging,'accStaging')"/> days before the last day of the month
+			</div>
+		</div> -->
+		<div class="rowDivMetadata" style="margin:5px">
+			<div class="col-lg-4">
+				<label>Available for Add Report Generation on</label>
+			</div>
+			<div class="col-lg-8">
+				<input type="text" ng-model="availableForAddReport" id='availableForAddReport' numbers-only ng-change="restrictInput(availableForAddReport,'availableForAddReport')"/> th of the month
+			</div>
+		</div>
+		<div class="rowDivMetadata" style="margin:5px">
+			<div class="col-lg-4">
+				<label>Target Month Year</label>
+			</div>
+				
+			<div class="col-lg-8">
+				<select name="targetMonthYear" id="targetMonthYear" ng-model="targetMonthYear">
+					<option value="{{targetOp1}}">{{targetOp1}}</option>
+					<option value="{{targetOp2}}">{{targetOp2}}</option>
+					<option value="{{targetOp3}}">{{targetOp3}}</option>
+				</select>
+			</div>	
+		</div> 
+
+		<div class="rowDivMetadata" style="margin:5px">
+			<div class="col-lg-4">
+				<label>First Feed Range</label>
+			</div>
+				
+			<div class="col-lg-8">
+				<input type="text" ng-model="firstFeedRange" id='firstFeedRange'  /> 
+			</div>	
+		</div>
+
+		<div class="rowDivMetadata" style="margin:5px">
+			<div class="col-lg-4">
+				<label>Second Feed Range</label>
+			</div>
+				
+			<div class="col-lg-8">
+				<input type="text" ng-model="secondFeedRange" id='secondFeedRange'  /> 
+			</div>	
+		</div>
+		
+		
+	</div>
+	<div class="modal-footer">
+		<input type="button" value="Update" class="btn-popup floatL" ng-click="saveConfigDetails()"/>
+		<input type="button" value="Close" class="btn-popup floatR" ng-click='close()'/>
+	</div>
+</div>

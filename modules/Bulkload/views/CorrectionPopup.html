@@ -1,0 +1,47 @@
+<div id = "modal-content" class="modal-content">
+	<div class="modal-header">
+		<label>Correction for the file - {{fileName}}</label>
+		<button ng-click='close()' class="closeBtn" style = "margin:-2px !important">X</button>
+	</div>
+	<div class="modal-body" style = "height:100% !important; border:1px solid #ccc;margin:4px; padding:0px !important;">
+		 <div style="height:200px">
+		 <div class="dfw-success" ng-if='uploadSuccess' style='float:left;width:90%;padding-left:2%'><p ng-bind='errSucc'></p></div>
+		<div class="dfw-error" ng-if='error' style='float:left;width:90%;padding-left:2%'><p ng-bind='errMsg'></p></div>
+		<div style="height:95px">
+				<div class="rowLbl" style='width:75%;padding:2% 0 0 2%;'>
+					<label>Please select the correction file to update</label>&nbsp;<label style="color: red;">*</label>
+				</div>
+				<div class="rowCnt" style='padding-left:2%;width: 98%;padding-right:0;margin-right: -78px;'>
+					<input id="uploadCrctFile" placeholder="Choose File" class="form-control searchInput" ng-model="bulkLoad.file" ng-change="displayHideMessages()" readonly/>
+				</div>
+				<div class="fileUpload btn btn-primary" style='margin-top:12px;float:left;height:18px !important;padding-top:1px' id='fileUploadDiv' ng-hide="selected">
+				    <span>Browse</span>
+				    <input id="uploadBtn" type="file" class="upload" file-model="myFile" accept=".csv" onchange="angular.element(this).scope().fileChanged(this)"/>
+				</div>
+				<div class="rowLbl" style='width:100%;padding:0% 0 0 2%;'>
+					<label style="font: 9px Verdana, Geneva, sans-serif !important;font-style: italic !important;">Download the sample template <a  href="" ng-click="downloadSampleTemplate()">here</a></label>
+				</div>
+		</div>
+		<div style="height:75px">
+				<div class="rowLbl" style='width:16%;padding:0% 0 0 2%;'>
+					<label>Comments</label>&nbsp;<label style="color: red;">*</label>
+				</div>
+				<div class="rowCnt" style='width:82%;padding:0;'>
+					<textarea maxlength="512" rows="4" cols="50" ng-model="correction.busJust"  class="form-control" style='height:auto !important;resize:none' ng-change="displayHideMessages()"> 
+					</textarea>
+				</div>
+		</div>
+		</div>
+		<div class="buttonPanel" style="height:30px; padding-top:1px; border-top:1px solid #ccc;">
+			<ul class = "buttonbox floatR">
+				<li class = "marginL-15" style = "margin-right: 20px;">
+					<input type = "button" class="btn-popup btn-primary" style="background: linear-gradient(#6fa5d9, #478ecc) !important;color: white !important;" ng-click = "update()" value ="Update"/>
+				</li>
+				<li class = "floatL marginL-15">
+					<input type = "button" class="btn-popup" ng-click='close()' value ="Close"/>
+				</li>
+			</ul>
+		</div>
+		
+	</div>
+</div>

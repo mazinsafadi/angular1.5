@@ -1,0 +1,76 @@
+<div id = "modal-content" class="modal-content">
+	<div class="modal-header">
+		<label>{{metaDataFetched.billingCode}}-Base Package Hierarchy</label>
+		<button ng-click='close()' class="closeBtn" style = "margin:-2px !important">X</button>
+	</div>
+	<div id = "modal-body" class="modal-body" style = "height:100% !important;margin:4px; padding:5px !important;">
+			<!-- <div class="rowDivMetadata" style="padding-left:20px;"><div class="col-lg-4 marginTopBottom10"><label>Base Package Group</label></div><div class="col-lg-4 marginTopBottom10"><input type="text"/></div><div class="col-lg-4 marginTopBottom10"><input type="button" value="Load" class="btn btn-primary floatL"/></div></div> -->
+	<div ng-if="error" style="color:red">{{errMsg}}</div>	
+	<div class="reachDetails marginLeftRight10 noBorder">		
+	<div class="col-lg-6">
+	<label>Available({{filteredbasPackageAvailable.length}})</label>
+	<table class="table table-bordered basePackages">
+		<thead>
+			<tr>
+				<th><input type="checkbox" ng-change="checkAll()" ng-model="selectAllcheckbox.select" ng-disabled="filteredbasPackageAvailable.length==0"/></th>
+				<th>Package Name</th>
+				<th>Package Code</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="data in filteredbasPackageAvailable=(basPackageAvailable | filter: pkg | orderBy:'name')">
+				<td><input type="checkbox" id="checkbox{{$index}}" ng-change="addToSelected($index,data);selectAll()" ng-model="data.availableChecked"/></td>
+				<td>{{data.name}}</td>
+				<td>{{data.billing_code}}</td>
+			</tr>
+			<!-- <tr ng-if="basPackageAvailable.length==0"><td colspan="6">No records found.</td></tr> -->
+			<tr ng-if="!filteredbasPackageAvailable.length"><td style="width:443px !important">No records found.</td></tr>		
+		</tbody>
+	</table>
+	<table class="table filterTable">	
+	<tbody><tr>
+			<td></td>
+			<td><input type="text" placeholder="Search by pkg name" ng-model="pkg.name"/></td>
+			<td><input type="text" placeholder="Search by pkg code" ng-model="pkg.billing_code"/></td>
+			</tr></tbody>
+	</table>
+	</div>
+	<div class="col-lg-6">
+	<label>Selected({{basPackageSelected.length}}) Unsaved changes({{addedCount}} added,{{removedCount}} removed)</label>
+	<table class="table table-bordered basePackages selectedtable">
+		<thead>
+			<tr>
+				<th><div ng-click="removeAll()">X</div></th>
+				<th>Package Name</th>
+				<th>Package Code</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="data in basPackageSelected" style="cursor:move">
+				<td><div class="floatL" ng-click="removeFromSelected($index,data)">X</div><div ng-class="colorInd(data)" id="colorDiv{{$index}}"></div></td>
+				<td>{{data.name}}</td>
+				<td>{{data.billing_code}}</td>
+			</tr>			
+			<tr ng-if="basPackageSelected.length==0"><td style="width:443px !important">No records found.</td></tr>			
+		</tbody>
+	</table>
+	<table class="table filterTable">	
+		<tbody>
+			<tr>			
+				<td>
+					<div class="colorIndicator greenIndicator legendColor"></div>
+					<div class="legentText">Added</div>
+					<div class="colorIndicator redIndicator legendColor"></div>
+					<div class="legentText">Removed</div>
+					<div class="legentText">No icon - Unchanged</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	
+	</div>	
+	</div>
+	<!-- <div class="marginTop20 marginLeftRight10"> -->
+	<div class="modal-footer"><input type="button" value="Update" class="btn-popup floatL" ng-click="updatePackages()" title="Update the base package information in the landing popup."/><input type="button" value="Close" class="btn-popup floatR" ng-click='close()'/></div>
+</div>

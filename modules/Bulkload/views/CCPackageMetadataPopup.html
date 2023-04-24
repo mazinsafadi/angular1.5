@@ -1,0 +1,202 @@
+<div id = "modal-content" class="modal-content">
+	<div class="modal-header">
+		<label>{{metaDataFetched.billingCode}}</label>
+		<button ng-click='close()' class="closeBtn">X</button>
+	</div>
+	<div id = "modal-body" class="modal-body" style = "height:100% !important;margin:4px; padding:5px !important;">
+		<div class="dfw-success" ng-if='updateSuccess' style='width:90%;padding:0px 0px 7px 5px !important'>
+			<p ng-bind='SuccMsg'></p>
+		</div>
+		<div class="dfw-error" ng-if='error' style='width:90%;padding:0px 0px 7px 5px !important'>
+			<p ng-bind='errMsg'></p>
+		</div>
+		
+		<div class="searchHeader popupBorder" style="border-bottom:1px solid #ccc;">
+			<img src = "images/ftv2mnode_noline.gif"  ng-click="toggle('showReach')" ng-if="showReach">
+			<img src = "images/ftv2pnode_noline.gif"  ng-click="toggle('hideReach')" ng-if="hideReach">
+			&nbsp;Reach Details
+		</div>
+		<div class="reachDetails" ng-show="showReach" ng-hide="hideReach" style="border-top:none;">			
+			<div class="rowDivMetadata">
+				<div class="col-lg-4 marginTopBottom10">
+					<label>Type<span style="color:red">*</span></label>
+				</div>
+				<div class="col-lg-4 marginTopBottom10">
+					<select class="form-control" ng-model="metaDataFetched.reach" style="width:156px" style="width:156px" ng-change="allowUpdate()">
+						<option value=''>Select One</option>
+						<option value="N">National</option>
+						<option value="R">RSN</option>
+					</select>
+				</div>
+			</div>
+			<!-- <div class="rowDivMetadata">
+				<div class="col-lg-4 marginTopBottom10">
+					<label>Targeted DTV Customer base(in millions)<span style="color:red">*</span></label>
+				</div>
+				<div class="col-lg-3 marginTopBottom10">
+					<input type="text" numbers-only ng-disabled="targetDisabled" ng-model="targetBase" ng-change="calculateDerived();calculateTargetCustomers();allowUpdate()"/>
+				</div>
+				<div class="col-lg-5 marginTopBottom10" title="When this checkbox is selected, system will populate the total DTV Customer base(legacy + target)">
+					<input type="checkbox" class="floatL" ng-model="useCurrentBase" ng-change="targetBase=metaDataFetched.dtvCustomerBase/1000000;targetDisabled=!targetDisabled;calculateDerived();calculateTargetCustomers();allowUpdate()"/>
+					<div  class="floatL" style="margin:4px 0 0 7px;width:90%">Use current DTV customer base({{metaDataFetched.dtvCustomerBase/1000000}} million)</div>
+				</div>
+			</div> -->
+			<div class="rowDivMetadata">
+				<div class="col-lg-4 marginTopBottom10">
+					<label>Penetration Benchmark percentage<!-- <span style="color:red">*</span> --></label>
+				</div>
+				<div class="col-lg-4 marginTopBottom10">
+					<input type="text" class="form-control" numbers-only ng-model="metaDataFetched.penetrationBenchMark" style="width:156px" readonly/> <!-- ng-change="calculateDerived();calculateTargetCustomers();allowUpdate() -->
+				</div>
+			</div>
+			<div class="rowDivMetadata">
+				<div class="col-lg-4 marginTopBottom10">
+					<label>CCA Provisioning Schedule</label>
+				</div>
+				<div class="col-lg-4 marginTopBottom10">
+				    <input type="text" class="form-control" ng-model="metaDataFetched.provisioningSchedule" style="width:156px" readonly/>
+				</div>
+			</div>
+			<div class="rowDivMetadata">
+				<div class="col-lg-4 marginTopBottom10">
+					<label>Subscribers to Add(First Feed)</label>
+				</div>
+				<div class="col-lg-4 marginTopBottom10">
+				    <input type="text" class="form-control" ng-model="metaDataFetched.firstSubsToAdd" style="width:156px" readonly/>
+				</div>
+			</div>
+			<div class="rowDivMetadata">
+				<div class="col-lg-4 marginTopBottom10">
+					<label>Subscribers to Add(Second Feed)</label>
+				</div>
+				<div class="col-lg-4 marginTopBottom10">
+				    <input type="text" class="form-control" ng-model="metaDataFetched.secondSubsToAdd" style="width:156px" readonly/>
+				</div>
+			</div>
+			<div class="rowDivMetadata">
+				<div class="col-lg-4 marginTopBottom10">
+					<label>Subscribers to Add(Monthly Target)</label>
+				</div>
+				<div class="col-lg-4 marginTopBottom10">
+				    <input type="text" class="form-control" ng-model="metaDataFetched.monthlyTarget" style="width:156px" readonly/>
+				</div>
+			</div>
+			<!-- <div class="rowDivMetadata">
+				<div class="col-lg-4 marginTopBottom10">
+					<label>Derived penetration benchmark</label>
+				</div>
+				<div class="col-lg-4 marginTopBottom10">{{derivedPenetration | number}}</div>
+			</div>
+			<div class="rowDivMetadata">
+				<div class="col-lg-4 marginTopBottom10">
+					<label>Current reach</label>
+				</div>
+				<div class="col-lg-4 marginTopBottom10">{{metaDataFetched.legacyReach?metaDataFetched.legacyReach:0 | number}}</div>
+			</div>
+			<div class="rowDivMetadata">
+				<div class="col-lg-4 marginTopBottom10">
+					<label>Monthly Target</label>
+				</div>
+				<div class="col-lg-4 marginTopBottom10">{{derivedPenetration-metaDataFetched.legacyReach>0?derivedPenetration-metaDataFetched.legacyReach:0 | number}}</div>
+			</div>	 -->		
+		</div>
+		<div class="searchHeader marginTop20 popupBorder" style="border-bottom:1px solid #ccc;">
+			<img src = "images/ftv2mnode_noline.gif"  ng-click="toggle('showBase')" ng-if="showBase">
+			<img src = "images/ftv2pnode_noline.gif"  ng-click="toggle('hideBase')" ng-if="hideBase">
+			&nbsp;Base Package Hierarchy
+		</div>
+		<div class="reachDetails" ng-show="showBase" ng-hide="hideBase" style="border-top:none;">
+			<div class="col-lg-12" style="width:auto;margin-bottom:10px">
+				<input type="button" value="Add/Edit" class="btn-popup" style="float:left;margin-top:0px !important" ng-click="openBasePackageGroupPopup()"/>
+			</div>
+			<!-- <div class="dfw-error" ng-if='thresholdExceeded' style='width:auto;float:left;padding:5px 0px 0px 15px !important'>
+				<p ng-bind='errMsg'></p>
+			</div> -->
+			<div class="floatR" style="width:auto;padding:0px 20px 10px 0px" title="Total number of customers that are eligible for this complimentary package provisioning">Total threshold:{{totalThreshold>0?totalThreshold:0}}</div>
+			<div class="baseHierarchyTable dummyclass">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Base Package Billing Code</th>
+							<th title="System generated ranking based on the order in Selected section of Base Package Hierarchy popup">Package Rank</th>
+							<th title="Number of customers having this base package subscription and are eligible for complimentary package addition">Eligible Customers(85% max)</th>
+							<th title="Number of customers that will be provisioned with this complimentary package">Targeted customers</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="data in basePackageHierarchy | orderBy:'newIndex'">
+							<td>{{data.billing_code}}</td>
+							<td>{{$index+1}}</td>
+							<td>{{data.eligibleCustomers>0?data.eligibleCustomers:0}}</td>
+							<td>{{data.threshold>0?data.threshold:0}}</td>
+							<!-- <td><input type="text" numbers-only ng-model="data.threshold" ng-change="validateThreshold($index)"/></td> -->
+						</tr>
+						<tr ng-if="basePackageHierarchy.length==0"><td colspan="5">No records found.</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="searchHeader marginTop20 popupBorder" style="border-bottom:1px solid #ccc;" ng-if='metaDataFetched.reach=="R"'>
+			<img src = "images/ftv2mnode_noline.gif"  ng-click="toggle('showPaired')" ng-if="showPaired">
+			<img src = "images/ftv2pnode_noline.gif"  ng-click="toggle('hidePaired')" ng-if="hidePaired">
+			&nbsp;Paired Packages
+		</div>
+		<div class="reachDetails" ng-show="showPaired" ng-hide="hidePaired" style="border-top:none;" ng-if='metaDataFetched.reach=="R"'>		
+			<div class="col-lg-12" style="margin-bottom:10px">
+				<input type="button" value="Add/Edit" class="btn-popup" style="margin-top:0px !important" ng-click="openPairedPackagePopup()"/>
+			</div>
+			<div class="baseHierarchyTable dummyclass">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Complimentary Package Billing Code</th>
+							<th>Complimentary Package Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat='data in pairedPackages'>
+							<td>{{data.basePackageCode}}</td>
+							<td>{{data.basePackageName}}</td>
+						</tr>
+						<tr ng-if="pairedPackages.length==0"><td colspan="5">No records found.</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="searchHeader marginTop20 popupBorder" style="border-bottom:1px solid #ccc;">
+			<img src = "images/ftv2mnode_noline.gif"  ng-click="toggle('showSchedule')" ng-if="showSchedule">
+			<img src = "images/ftv2pnode_noline.gif"  ng-click="toggle('hideSchedule')" ng-if="hideSchedule">
+			&nbsp;Schedule Details
+		</div>
+		<div class="reachDetails" ng-show="showSchedule" ng-hide="hideSchedule" style="border-top:none;">		
+			<div class="baseHierarchyTable scheduleTable">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Entity</th>
+							<th>Value</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td title="Day of every month by which this complimentary package provisioning should be started">Execution start day<span style="color:red">*</span></td>
+							<td><input type="text" numbers-only ng-model="execStartDay" id="execStartDay" ng-change="restrictInput(execStartDay,'execStartDay');allowUpdate()"/></td>
+						</tr>
+						<tr>
+							<td title="Day of every month by which this complimentary package provisioning should be completed">Execution end day<span style="color:red">*</span></td>
+							<td><input type="text" numbers-only ng-model="execEndDay" id="execEndDay" ng-change="restrictInput(execEndDay,'execEndDay');allowUpdate()"/></td>
+						</tr>
+						<tr>
+							<td title="Accounts that were created within the exclusion criteria range of the previous month will not be considered for automation process. ">Exclusion criteria</td>
+							<td><input type="text" numbers-only ng-model="exCriteria" id="exCriteria" ng-change="allowUpdate()" ng-blur="restrictInput(exCriteria,'exCriteria');"/></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<input type="button" value="Update" class="btn-popup floatL" ng-click="updateMetada()" ng-disabled="updateNotAllowed"/> <!--  ng-disabled="updateNotAllowed || allowUpdateBtn" -->
+		<input type="button" value="Close" class="btn-popup floatR" ng-click='close()'/>
+	</div>
+</div>

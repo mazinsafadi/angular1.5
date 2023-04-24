@@ -1,0 +1,97 @@
+[ {
+  "accountId": "24067830",
+  "accountStatus": "ACTV",
+  "firstName": "CASC",
+  "lastName": "QWE",
+  "middleInitial": "T",
+  "city": "EL SEGUNDO",
+  "state": "CA",
+  "zipCode": "90245",
+  "countyName": "LOS ANGELES",
+  "vadaISCPReceiverDetails": [
+    {
+      "accessCardId": "003059065240",
+      "accessCardStatus": "ACTV",
+      "manufacturer": "DIRECTV",
+      "model": "HR44-700",
+      "macAddress": null,
+      "serialNumber": "G33DB3GB002089",
+      "location": "BAR ROOM",
+      "receiverId": "025176992326",
+      "purchaseLimit": "49.99"
+    },
+    {
+      "accessCardId": "P03059065239",
+      "accessCardStatus": "PEND",
+      "manufacturer": "DIRECTV",
+     "model": "HR44-700",
+      "macAddress": null,
+      "serialNumber": "G33DB3GB002089",
+      "location": "livingRoom",
+      "receiverId": "025176992326",
+      "purchaseLimit": "49.99"
+    }
+  ],
+  "vadaISCPClientDetails": [
+    {
+      "assetManufacturer": "DIRECTV",
+      "assetModel": "C61-100",
+      "macAddress": "E0B7B11E3101",
+      "assetSerialNumber": "A98UC8KD638533",
+      "location": "BASEMENT",
+      "receiverId": null,
+      "assetStatus": "ACTV",
+      "assetType": "HMC Client"
+    }
+  ]
+},
+{
+  "accountId": "24067831",
+  "accountStatus": "ACTV",
+  "firstName": "CASC",
+  "lastName": "QWE",
+  "middleInitial": "T",
+  "city": "EL SEGUNDO",
+  "state": "CA",
+  "zipCode": "90245",
+  "countyName": "LOS ANGELES",
+  "vadaISCPReceiverDetails": [
+    {
+      "accessCardId": "003059065241",
+      "accessCardStatus": "ACTV",
+      "manufacturer": "DIRECTV",
+      "model": "HR44-700",
+      "macAddress": null,
+      "serialNumber": "G33DB3GB002089",
+      "location": "BAR ROOM",
+      "receiverId": "025176992326",
+      "purchaseLimit": "49.99"
+    },
+    {
+      "accessCardId": "P03059065242",
+      "accessCardStatus": "PEND",
+      "manufacturer": "DIRECTV",
+     "model": "HR44-700",
+      "macAddress": null,
+      "serialNumber": "G33DB3GB002089",
+      "location": "livingRoom",
+      "receiverId": "025176992326",
+      "purchaseLimit": "49.99"
+    }
+  ],
+  "vadaISCPClientDetails": [
+    {
+      "assetManufacturer": "DIRECTV",
+      "assetModel": "C61-100",
+      "macAddress": "E0B7B11E3101",
+      "assetSerialNumber": "A98UC8KD638534",
+      "location": "BASEMENT",
+      "receiverId": null,
+      "assetStatus": "ACTV",
+      "assetType": "HMC Client"
+    }
+  ]
+}
+ 
+ 
+]

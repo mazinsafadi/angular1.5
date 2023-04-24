@@ -1,0 +1,76 @@
+<div class="breadcrumbWrapper">
+		<ul>
+			<li>Bulkload Process</li>
+			<li>></li>
+			<li>Complimentary Package Metadata</li>
+		</ul>
+		<img src = "images/settings_icon.png" width='20' height='20' style="float:right;margin-right:7px" ng-click="openSettingsPopup()">
+	</div>
+<div id="mainBody" class="pageWrapper indexPage">
+    <div id="contentPannel">
+    <div class="dfw-success" ng-if='uploadSuccess' style='width:90%'><p ng-bind='errSucc'></p></div>
+		<div class="dfw-error" ng-if='error' style='width:90%'><p ng-bind='errMsg'></p></div>
+       <!--  <form action="#" method="post" id="bulkLoadForm" name="bulkLoadForm"> -->
+        <div class="totaldiv">
+        <div id="searchSection">
+			<div class="searchHeader">
+						<img src = "images/ftv2mnode_noline.gif" id = "searchMinus" ng-click="toggle('searchMinus')">
+						<img src = "images/ftv2pnode_noline.gif" id = "searchPlus" ng-click="toggle('searchPlus')" style = "display:none;">
+						<span style="font-size:12px;color:#666">&nbsp;Search</span>
+			</div>
+			<div id="searchParentSection">
+			<div class="col-lg-2"><label>Package Billing Code</label></div><div class="col-lg-2"><input type="text" ng-model="pkgBillingCode" id="pkgBlngCode"/></div>
+			<div class="col-lg-2"><label>Channel Name</label></div><div class="col-lg-2"><input type="text" id="chlName" ng-model="channelName"/></div>
+			<div class="col-lg-2"><label>Channel Type</label></div><div class="col-lg-2"><select ng-model="chlType" style="width:156px"><option value="">Select One</option><option value="N">National</option><option value="R">RSN</option></select></div>
+			<div class="col-lg-2"></div>
+			
+			</div>
+			<div class="buttonBox">
+			<input type="button" value="Search" class="btn btn-primary searchButton" style="margin-top:0px !important" ng-click="propValue='';initLoad()"/><span class="floatR separator">|</span><a class="floatR clearLink" ng-click="reset()">Clear</a>
+			</div>
+			</div>
+			<div id="searchResults">
+			<div class="searchResultsHeader">
+			<img src = "images/ftv2mnode_noline.gif" id = "searchResMinus" ng-click="toggle('searchResMinus')">
+						<img src = "images/ftv2pnode_noline.gif" id = "searchResPlus" ng-click="toggle('searchResPlus')" style = "display:none;">
+						<span>&nbsp;Search Results&nbsp;</span><span>(displaying {{CCPackageMetadata.length}} records)</span>
+			</div>
+			<div id="searchResultsContainer" class="dummyclass">
+			<table class='table'>
+				<thead>
+					<tr>
+						<th rowspan="2">Package Billing Code</th>
+						<th rowspan="2">Channel</th>
+						<th colspan="2">Current Reach</th>
+						<th rowspan="2">Channel Type</th>
+						<th rowspan="2">Monthly Target</th>
+						<th rowspan="2">Last Updated</th>
+					</tr>
+					<tr>
+						<th>Target</th>
+						<th>Legacy</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="data in CCPackageMetadata" ng-class="data.recentlyEdited?'rowHighlight':''">
+						<td><a ng-click="openMetadataPopup($index,data)" class="clearLink">{{data.billingCode}}</a></td>
+						<td>{{data.channelName}}</td>
+						<td>{{data.targetReach}}</td>
+						<td>{{data.legacyReach}}</td>
+						<td ng-bind="data.reach=='R'?'RSN':data.reach=='N'?'National':''"></td>
+						<td>{{data.tempmonthlyTarget}}</td>
+						<td ng-bind="data.lastUpdatedDate?'{{data.lastUpdatedDate}}'+' By '+'{{data.lastUpdateBy}}':''"></td>
+					</tr>
+					<tr ng-if="CCPackageMetadata.length==0"><td colspan="7">No records found.</td></tr>
+				</tbody>
+			</table>
+			</div>
+			</div>
+			</div>	
+        </div>
+        </div>
+<div id="mydiv" ng-if="showSpinner">
+    <div class='loaderdiv'><div style='text-align:center;background-color:#ccc;color: black;font-weight: bold;padding: 3px;'>Processing,please wait...</div><div style='margin-left:5%;margin-top: 15px;'><img src="images/spin.gif" class="ajax-loader" width="90%" height='10'/></div></div>
+	</div>
+	
+	

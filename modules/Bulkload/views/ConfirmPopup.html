@@ -1,0 +1,34 @@
+<style>
+.confirmPopup .modal-dialog{
+	width:30% !important;
+	height:auto !important;
+	margin:0px auto !important;
+}
+#confirmation-header{
+	height: 27px !important;
+}
+</style>
+<div id = "modal-content" class="modal-content">
+	<div id = "confirmation-header"  class="modal-header">
+		<label>Warning!</label>
+		<button ng-click='close()' class="closeBtn" style = "margin:-2px !important">X</button>
+	</div>
+	<div id = "modal-body" class="modal-body" style = "height:100% !important; border:1px solid #ccc;margin:4px; padding:0px !important;">
+		<div style = "font: 14px Verdana, Geneva, sans-serif; color: #666; min-height:35px; max-height:100px;">
+			
+			<div style = "padding: 3px; overflow: auto; max-height: 90px;">
+				<label>Are you sure you want to delete?</label>		
+			</div>
+		</div>
+		<div class="buttonPanel" style="height:30px; padding-top:1px; border-top:1px solid #ccc;">
+			<ul class = "buttonbox floatR">
+				<li class = "marginL-15" style = "margin-right: 20px;">
+					<input type = "button" class="btn-popup" ng-click='close()' value ="Cancel"/>
+				</li>
+				<li class = "floatL marginL-15">
+					<input type = "button" class="btn-popup" ng-click = "confirm()" value ="Delete"/>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

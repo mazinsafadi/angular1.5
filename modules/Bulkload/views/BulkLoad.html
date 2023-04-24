@@ -1,0 +1,143 @@
+<div id="mainBody" class="pageWrapper indexPage">
+    <div id="contentPannel">
+    <div class="dfw-success" ng-if='uploadSuccess' style='width:90%'><p ng-bind='errSucc'></p></div>
+		<div class="dfw-error" ng-if='error' style='width:90%'><p ng-bind='errMsg'></p></div>
+       <!--  <form action="#" method="post" id="bulkLoadForm" name="bulkLoadForm"> -->
+        <div style="overflow:auto">
+				<div class="rowLbl" style="padding-top:22px">
+					<label>Pending DNS Files</label>&nbsp;<label
+						style="color: red;">*</label>
+				</div>
+				<div class="rowCnt rowCnt1" style="padding-right:0;">
+			<!-- <table class='table tableSection table-bordered table-striped'> -->
+			<table class='tabular-data table table-striped table-bordered dnsTable'>
+				<thead>
+					<tr>
+						<th>Select</th>
+						<th>File Name</th>
+						<th>Record Count</th>
+						<th>Uploaded Date</th>
+						<th>Effective Date</th>
+						<th ng-if="DNSSupervisor">Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="data in pendingDNSFiles">
+						<td><span><input type='checkbox' ng-model='data.selection' ng-change='checkAll($index);displayHideMessages();disableFields()' ng-disabled='!DNSSupervisor'/></span></td>
+						<td>{{data.fileName}}</td>
+						<td>{{data.recordCount}}</td>
+						<td>{{data.uploadedTime | date:'dd/MM/yyyy HH:mm':'EST'}}</td>
+						<td>{{data.effectiveDate | date:'dd/MM/yyyy HH:mm':'EST'}}</td>
+						<td ng-if="DNSSupervisor"><img src="../images/delete_disabled.png" id='img{{$index}}' width=25 height=25 ng-click='openConfirmPopup($index,data,this)' ng-disabled='!data.selection'/></td>
+						<!-- <td><a  href="" ng-csv="getSingleInvoicePDF()" csv-header='getDataHeader()' filename="{{CSVFileName}}" field-separator="{{separator}}" decimal-separator="{{decimalSeparator}}"><img src="../images/download_csv.png" width=25 height=25/></a></td> -->
+					</tr>
+					<tr ng-if="pendingDNSFiles.length==0"><td>No records found</td></tr>
+				</tbody>
+			</table>
+			</div>
+			</div>
+			<div style="overflow:auto">
+				<div class="rowLbl">
+					<label>Select DNS file to upload</label>&nbsp;<label
+						style="color: red;">*</label>
+				</div>
+				<div class="rowCnt" style='padding-top:10px;width: 50%;padding-right:0;margin-right: -78px;'>
+			<input id="uploadFile" placeholder="Choose File" class="form-control searchInput" ng-model="bulkLoad.file" ng-change="displayHideMessages()" readonly/>
+			</div>
+<div class="fileUpload btn btn-primary" style='margin-top:12px;float:left;height:18px !important;padding-top:1px' id='fileUploadDiv' ng-hide="selected">
+    <span>Browse</span>
+    <input id="uploadBtn" type="file" class="upload" file-model="myFile" accept=".csv" onchange="angular.element(this).scope().fileChanged(this)"/>
+</div>
+				<!-- <div class="rowCnt">
+					<input type="file" class="form-control searchInput"
+						 file-model='bulkLoad.file'>
+				</div>
+				 <div class="searchTd m-t-10" style='width:33%;float:left;'>
+				<input type="button" value="Browse" class="btn">
+				</div> -->
+				<!-- <div id="exportable" style='display:none'>
+    <table width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>DoB</th>
+            </tr>
+        </thead>
+    </table>
+    </div> -->
+				<!-- <div class="rowLbl" style='padding-top: 0;width:100%'><label>Download the sample template <a  href="" ng-csv="" csv-header='getDataHeader()' filename="{{CSVFileName}}" field-separator="{{separator}}" decimal-separator="{{decimalSeparator}}">here</a></label></div> -->
+				<div class="rowLbl" style='padding-top: 0;width:100%;padding-left:33%;'><label style="font: 9px Verdana, Geneva, sans-serif !important;font-style: italic !important;">Download the sample template <a  href="" ng-click="downloadSampleTemplate()">here</a></label></div>
+			</div>
+			<div style="overflow:auto">
+				<div class="rowLbl">
+					<label>Business Justification</label>&nbsp;<label
+						style="color: red;">*</label>
+				</div>
+				<div class="rowCnt" style='width:50%;padding-right:0;'>
+				<textarea maxlength="512" rows="4" cols="50" ng-model="bulkLoad.busJust"  class="form-control" style='height:auto !important;resize:none' ng-change="displayHideMessages()"> 
+</textarea>
+				</div>
+			</div>
+			<div style="overflow:auto">
+				<div class="rowLbl">
+					<label>File Description</label>&nbsp;<label
+						style="color: red;">*</label>
+				</div>
+				<div class="rowCnt" style='width:50%;padding-right:0;'>
+				<textarea maxlength="512" rows="4" cols="50" ng-model="bulkLoad.fileDesc"  class="form-control" style='height:auto !important;resize:none' ng-change="displayHideMessages()" ng-disabled='changeEditFields'> 
+</textarea>
+				</div>
+			</div>
+			<div style="overflow:auto">
+				<div class="rowLbl">
+					<label>Request ID/Project ID</label>&nbsp;<label
+						style="color: red;">*</label>
+				</div>
+				<div class="rowCnt" style='width:50%;padding-right:0;'>
+				<input type="text" maxlength="20" class="form-control searchInput" ng-model="bulkLoad.requestId" ng-change="displayHideMessages()" ng-disabled='changeEditFields'> 
+				</div>
+			</div>
+			<div style="overflow:auto">
+				<div class="rowLbl">
+					<label>Effective Date</label>&nbsp;<label
+						style="color: red;">*</label><!-- <br>
+						<label style="font: 9px Verdana, Geneva, sans-serif !important;">(MM/DD/YYYY HH:MM)</label> -->
+				</div>
+				<div class="rowCnt" style='width:50%;padding-right:0;'>
+				<input type="text" id='effectiveDate' readonly class="form-control datepick dfw-viewer-input searchInput" ng-model="bulkLoad.effectiveDate" style='background:url(../../images/icon-date-time-16x16.png) no-repeat right' ng-change="displayHideMessages()"/> <!-- <span
+										class="dfw-date-time-icon-16-for-form form-control-feedback calendarIcon"
+										aria-hidden="true"></span> -->
+				</div>
+			<!-- 	<div class="searchTd m-t-10" style='width:33%;float:left;'>
+				<input type="button" value="Reset" class="btn" ng-click='reset()'>
+				<input type="button" value="Upload" class="btn">
+				</div> -->
+				<div class="rowLbl" style='margin-top:-20px;width:33%'><label style="font:9px Verdana, Geneva, sans-serif !important">(MM/DD/YYYY HH:MM)</label></div>
+			</div>
+			<div style="overflow:auto">
+				<div class="rowLbl">
+					<label>Action Priority</label>&nbsp;<label
+						style="color: red;">*</label>
+				</div>
+				<div class="rowCnt" style='width:50%;padding-right:0;'>
+				<input type="radio" class="form-contro" name='priority' ng-model="bulkLoad.priority" value='NONE' ng-change="displayHideMessages()" ng-disabled='changeEditFields'>&nbsp<label style='margin-right:10px'>None</label>
+				<input type="radio" class="form-contro" name='priority' ng-model="bulkLoad.priority" value='ADD' ng-change="displayHideMessages()" ng-disabled='changeEditFields'>&nbsp<label style='margin-right:10px'>Add</label> 
+				<input type="radio" class="form-contro" name='priority' ng-model="bulkLoad.priority" value='REMOVE' ng-change="displayHideMessages()" ng-disabled='changeEditFields'>&nbsp<label style='margin-right:10px'>Remove</label> 
+				</div>
+			</div>
+			<div style="overflow:auto">
+				<div class="searchTd m-t-10" style='width:83%'>
+				<input type="button" value="Upload" class="btn" ng-click='uploadFile()' style='float:right;margin-left:20px' ng-if="showUploadButton && !selected" ng-disabled="bulkLoad.fileDesc  && myFile && bulkLoad.busJust  &&  bulkLoad.requestId && bulkLoad.priority?false:true">
+				<input type="button" value="Update" class="btn" ng-click='updateFile()' style='float:right;margin-left:20px' ng-if="showUploadButton && selected" ng-disabled="selected && bulkLoad.busJust?false:true">
+				<input type="button" value="Reset" class="btn" ng-click='reset()' style='float:right' ng-if="showUploadButton">
+				</div>
+			</div>
+		<!-- </form> -->
+        </div>
+        </div>
+<div id="mydiv" ng-if="uploadDNSClicked">
+    <div class='loaderdiv'><div style='text-align:center;background-color:#ccc;color: black;font-weight: bold;padding: 3px;'>Processing,please wait...</div><div style='margin-left:5%;margin-top: 15px;'><img src="images/spin.gif" class="ajax-loader" width="90%" height='10'/></div></div>
+	</div>
+	
+	

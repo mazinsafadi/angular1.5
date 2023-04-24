@@ -1,0 +1,19 @@
+[{
+    "Make": "DIRECTV",
+    "Model": "H24-200",
+    "Mac_Address": "RTLS-28",
+    "Serial_No": "4152",
+    "Location": "Bed Room",
+    "Receiver_ID": "7898585",
+    "Access_Card_ID": "7898585",
+    "Status": "Active"
+            }, {
+    "Make": "DIRECTV",
+    "Model": "D11",
+    "Mac_Address": "RTLS-29",
+    "Serial_No": "4153",
+    "Location": "Bed Room",
+    "Receiver_ID": "7898586",
+    "Access_Card_ID": "7898586",
+    "Status": "Active"
+            }]
